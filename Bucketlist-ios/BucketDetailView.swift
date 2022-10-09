@@ -9,6 +9,7 @@ import SwiftUI
 
 struct BucketDetailView: View {
     @Binding var bucket: Bucket
+    @State private var isPresentingEditView = false
     
     var body: some View {
         List {
@@ -31,15 +32,36 @@ struct BucketDetailView: View {
                 }
             }
             Section(header: Text("Friends")) {
-                Label("Safal", systemImage: "person")
-                Label("Sulav", systemImage: "person")
-                Label("Surakshya", systemImage: "person")
+                if bucket.people.count < 1 {
+                    Text("Bucket is not shared")
+                }
+                ForEach(bucket.people) { person in
+                    Label(person.email, systemImage: "person")
+                }
             }
         }
         .navigationTitle(bucket.name)
         .toolbar {
             Button("Edit") {
-                
+                isPresentingEditView = true
+            }
+        }
+        .sheet(isPresented: $isPresentingEditView) {
+            NavigationView {
+                BucketModifyView(bucket: $bucket)
+                    .navigationTitle(bucket.name)
+                    .toolbar {
+                        ToolbarItem(placement: .confirmationAction) {
+                            Button("Done") {
+                                isPresentingEditView = false
+                            }
+                        }
+                        ToolbarItem(placement: .cancellationAction) {
+                            Button("Dismiss") {
+                                isPresentingEditView = false
+                            }
+                        }
+                    }
             }
         }
     }

@@ -10,18 +10,32 @@ import Foundation
 
 struct Bucket: Identifiable {
     let id: UUID
-    let name: String
-    let description: String
+    var name: String
+    var description: String
     let createdDate: Date
-    let lists: [BucketList]
+    var lists: [BucketList]
+    var people: [Person]
     
     
-    init(id: UUID = UUID(), name: String, description: String, createdDate: Date = Date(), lists: [BucketList] = []) {
+    init(id: UUID = UUID(), name: String, description: String, createdDate: Date = Date(), lists: [BucketList] = [], people: [Person] = []) {
         self.id = id
         self.name = name
         self.description = description
         self.createdDate = createdDate
         self.lists = lists
+        self.people = people
+    }
+}
+
+extension Bucket {
+    struct Person: Identifiable {
+        let id: UUID
+        var email: String
+        
+        init(id: UUID = UUID(), email: String) {
+            self.id = id
+            self.email = email
+        }
     }
 }
 
