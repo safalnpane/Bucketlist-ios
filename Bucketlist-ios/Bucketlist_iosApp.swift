@@ -9,9 +9,13 @@ import SwiftUI
 
 @main
 struct Bucketlist_iosApp: App {
+    @State private var buckets: [Bucket] = Bucket.sampleData
+    
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            NavigationView {
+                BucketsView(buckets: $buckets)
+            }
         }
     }
 }
