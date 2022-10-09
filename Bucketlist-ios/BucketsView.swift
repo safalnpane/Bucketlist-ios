@@ -12,8 +12,8 @@ struct BucketsView: View {
     
     var body: some View {
         List {
-            ForEach(buckets) { bucket in
-                NavigationLink(destination: Text(bucket.name)) {
+            ForEach($buckets) { $bucket in
+                NavigationLink(destination: BucketDetailView(bucket: $bucket)) {
                     BucketCardView(bucket: bucket)
                 }
             }

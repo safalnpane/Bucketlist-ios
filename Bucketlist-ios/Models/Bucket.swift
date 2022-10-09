@@ -13,13 +13,15 @@ struct Bucket: Identifiable {
     let name: String
     let description: String
     let createdDate: Date
+    let lists: [BucketList]
     
     
-    init(id: UUID = UUID(), name: String, description: String, createdDate: Date = Date()) {
+    init(id: UUID = UUID(), name: String, description: String, createdDate: Date = Date(), lists: [BucketList] = []) {
         self.id = id
         self.name = name
         self.description = description
         self.createdDate = createdDate
+        self.lists = lists
     }
 }
 
