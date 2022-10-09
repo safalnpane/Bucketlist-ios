@@ -28,7 +28,7 @@ struct Bucket: Identifiable {
 extension Bucket {
     static let sampleData: [Bucket] =
     [
-        Bucket(name: "ABC Trip Plan", description: "Let's plan a trip to ABC. It's gonna be a fun treak with friends."),
+        Bucket(name: "ABC Trip Plan", description: "Let's plan a trip to ABC. It's gonna be a fun treak with friends.", lists: BucketList.sampleData),
         Bucket(name: "Sydney Boys Trip", description: "It's my dream to have a boys trip to Sydeny with my cousins."),
         Bucket(name: "Flight to Sydney", description: "I am going back to Sydney in 2 weeks time."),
     ]

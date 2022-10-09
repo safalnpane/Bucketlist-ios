@@ -20,14 +20,14 @@ struct BucketDetailView: View {
                 Text(bucket.createdDate, style: .date)
             }
             Section(header: Text("Lists in this bucket")) {
-                NavigationLink(destination: Text("Expenses")) {
-                    Text("Expenses")
+                ForEach(bucket.lists) { list in
+                    NavigationLink(destination: Text(list.name)) {
+                        Text(list.name)
+                            .foregroundColor(.accentColor)
+                    }
                 }
-                NavigationLink(destination: Text("People")) {
-                    Text("People")
-                }
-                NavigationLink(destination: Text("Stops")) {
-                    Text("Stops")
+                Button(action: {}) {
+                    Label("Add new list", systemImage: "plus")
                 }
             }
             Section(header: Text("Friends")) {
