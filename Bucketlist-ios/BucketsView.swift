@@ -9,6 +9,8 @@ import SwiftUI
 
 struct BucketsView: View {
     @Binding var buckets: [Bucket]
+    @State private var isPresentingNewBucket = false
+    @State private var newBucket = Bucket()
     
     var body: some View {
         List {
@@ -19,6 +21,31 @@ struct BucketsView: View {
             }
         }
         .navigationTitle("My buckets")
+        .toolbar {
+            Button(action: { isPresentingNewBucket = true }) {
+                Image(systemName: "plus")
+            }
+        }
+        .sheet(isPresented: $isPresentingNewBucket) {
+            NavigationView {
+                BucketModifyView(bucket: $newBucket)
+                    .toolbar {
+                        ToolbarItem(placement: .confirmationAction) {
+                            Button("Add") {
+                                buckets.append(newBucket)
+                                isPresentingNewBucket = false
+                                newBucket = Bucket()
+                            }
+                        }
+                        ToolbarItem(placement: .cancellationAction) {
+                            Button("Dismiss") {
+                                newBucket = Bucket()
+                                isPresentingNewBucket = false
+                            }
+                        }
+                    }
+            }
+        }
     }
 }
 

@@ -17,7 +17,7 @@ struct Bucket: Identifiable {
     var people: [Person]
     
     
-    init(id: UUID = UUID(), name: String, description: String, createdDate: Date = Date(), lists: [BucketList] = [], people: [Person] = []) {
+    init(id: UUID = UUID(), name: String = "", description: String = "", createdDate: Date = Date(), lists: [BucketList] = [], people: [Person] = []) {
         self.id = id
         self.name = name
         self.description = description
