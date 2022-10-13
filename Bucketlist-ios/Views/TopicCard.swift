@@ -12,7 +12,7 @@ struct TopicCard: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            Text("8 Tasks")
+            Text("\(topic.items.count) Tasks")
                 .font(.caption)
             Spacer()
             Text(topic.title)

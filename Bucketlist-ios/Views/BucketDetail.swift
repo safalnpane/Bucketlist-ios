@@ -29,7 +29,7 @@ struct BucketDetail: View {
             }
             Section(header: Text("Topics")) {
                 ForEach(bucket.topics) { topic in
-                    NavigationLink(destination: Text("Hello")) {
+                    NavigationLink(destination: TopicDetail(topic: topic)) {
                         TopicCard(topic: topic)
                     }
                 }
