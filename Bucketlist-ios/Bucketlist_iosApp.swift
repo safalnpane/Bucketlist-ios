@@ -13,7 +13,7 @@ struct Bucketlist_iosApp: App {
     var body: some Scene {
         WindowGroup {
             NavigationView {
-                BucketListView()
+                Nav()
             }
         }
     }
