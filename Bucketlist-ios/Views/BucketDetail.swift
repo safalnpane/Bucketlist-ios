@@ -9,6 +9,7 @@ import SwiftUI
 
 struct BucketDetail: View {
     @Binding var bucket: Bucket
+    @State private var isEditingBucket = false
     
     var body: some View {
         List {
@@ -28,21 +29,41 @@ struct BucketDetail: View {
                 .font(.caption)
             }
             Section(header: Text("Topics")) {
-                ForEach(bucket.topics) { topic in
-                    NavigationLink(destination: TopicDetail(topic: topic)) {
+                ForEach($bucket.topics) { $topic in
+                    NavigationLink(destination: TopicDetail(topic: $topic)) {
                         TopicCard(topic: topic)
                     }
                 }
             }
         }
         .navigationTitle(bucket.name)
+        .toolbar {
+            Button(action: {
+                isEditingBucket = true
+                
+            }) {
+                Text("Edit")
+            }
+        }
+        .sheet(isPresented: $isEditingBucket) {
+            NavigationView {
+                NewBucket(bucket: $bucket)
+                    .navigationTitle(bucket.name)
+                    .navigationBarTitleDisplayMode(.inline)
+                    .toolbar {
+                        ToolbarItem(placement: .confirmationAction) {
+                            Button("Done") {
+                                isEditingBucket = false
+                            }
+                        }
+                    }
+            }
+        }
     }
 }
 
 struct BucketDetail_Previews: PreviewProvider {
     static var previews: some View {
-        NavigationView {
-            BucketDetail(bucket: .constant(Bucket.sampleData[0]))
-        }
+        BucketDetail(bucket: .constant(Bucket.previewData[0]))
     }
 }

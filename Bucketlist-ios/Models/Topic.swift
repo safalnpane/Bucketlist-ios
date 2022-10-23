@@ -26,11 +26,24 @@ struct Topic: Identifiable {
         return count
     }
     
-    static let sampleData = [
-        Topic(title: "Expenses", items: Item.sampleData),
-        Topic(title: "Stays", items: Item.sampleData),
-        Topic(title: "Funds", items: [Item.sampleData[0], Item.sampleData[2], Item.sampleData[3]]),
-        Topic(title: "Trips"),
+    static let previewData = [
+        Topic(title: "People", items: [
+            Item(title: "Safal"),
+            Item(title: "Sulav"),
+            Item(title: "Kushal"),
+            Item(title: "Sijan")
+        ]),
+        Topic(title: "Stays", items: [
+            Item(title: "Haweli Hotel & Bar"),
+            Item(title: "Lamjung Homestay"),
+            Item(title: "Pokhara Hotel")
+        ]),
+        Topic(title: "Expenses", items: [
+            Item(title: "Stays"),
+            Item(title: "Travels"),
+            Item(title: "Food"),
+            Item(title: "First Aid")
+        ])
     ]
     
     struct Item: Identifiable {
@@ -42,12 +55,5 @@ struct Topic: Identifiable {
             self.title = title
             self.isCompleted = isCompleted
         }
-        
-        static let sampleData = [
-            Item(title: "Call folks"),
-            Item(title: "Plan Itenarary", isCompleted: true),
-            Item(title: "Collect money"),
-            Item(title: "Learn Swift")
-        ]
     }
 }

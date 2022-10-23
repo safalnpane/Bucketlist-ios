@@ -8,12 +8,11 @@
 import SwiftUI
 
 struct TopicDetail: View {
-    let topic: Topic
+    @Binding var topic: Topic
+    @State private var newItemTitle = ""
     
     var body: some View {
         List {
-            Text("This is a short description of this topic. This must be short and sweet and describe the purpose of this topic")
-                .font(.caption)
             Section(header: Text("Items")) {
                 HStack {
                     Text("Tasks: \(topic.items.count)")
@@ -31,16 +30,27 @@ struct TopicDetail: View {
                 .onDelete { index in
                     
                 }
+                HStack {
+                    TextField("New Item", text: $newItemTitle)
+                    Button(action: {
+                        let newItem = Topic.Item(title: newItemTitle)
+                        topic.items.append(newItem)
+                        newItemTitle = ""
+                    }) {
+                        Image(systemName: "plus.circle.fill")
+                    }.disabled(newItemTitle.isEmpty)
+                }
             }
         }
         .navigationTitle(topic.title)
+        .navigationBarTitleDisplayMode(.inline)
     }
 }
 
 struct TopicDetail_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            TopicDetail(topic: Topic.sampleData[0])
+            TopicDetail(topic: .constant(Topic.previewData[0]))
         }
     }
 }

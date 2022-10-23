@@ -9,54 +9,61 @@ import Foundation
 
 
 struct Bucket: Identifiable {
-    
-    // MARK: - Internal types
-    let id: UUID
-    let createdAt: Date
+    let id: UUID = UUID()
+    let createdAt: Date = Date()
     
     var updatedAt: Date
     var name: String
     var description: String
     var owners: [Owner]
-    var topics: [Topic] = []
+    var topics: [Topic]
     
-    // MARK: - Internal init
-    init(name: String, description: String = "", owners: [Owner] = [], topics: [Topic] = []) {
-        self.id = UUID()
-        self.createdAt = Date()
+    init(name: String, description: String, topics: [Topic] = [], owners: [Owner] = []) {
         self.updatedAt = Date()
-        
         self.name = name
         self.description = description
         self.owners = owners
         self.topics = topics
     }
     
-    static let sampleData = [
-        Bucket(name: "Bucket 1",
-               description: "This is bucket 1. This is a short description of this bucket. This could include a length restriction",
-               owners: [Owner.owners[0], Owner.owners[1], Owner.owners[2]],
-               topics: [Topic.sampleData[0], Topic.sampleData[1], Topic.sampleData[2]]),
-        Bucket(name: "Bucket 2", description: "This is bucket 2", owners: [Owner.owners[2], Owner.owners[1]]),
-        Bucket(name: "Bucket 3", description: "This is bucket 3", owners: [Owner.owners[0]]),
-        Bucket(name: "Bucket 4", description: "This is bucket 4", topics: [Topic.sampleData[0], Topic.sampleData[1]])
-        
+    static let previewData = [
+        Bucket(
+            name: "Bucket - 1",
+            description: "This is a first bucket, this bucket is for testing purpose only",
+            topics: [Topic.previewData[0], Topic.previewData[1], Topic.previewData[2]],
+            owners: [Owner.previewData[0], Owner.previewData[1]]
+        ),
+        Bucket(
+            name: "Bucket - 2",
+            description: "This is a second bucket, this bucket is for testing purpose only",
+            topics: [Topic.previewData[2], Topic.previewData[1]],
+            owners: [Owner.previewData[1]]
+        ),
+        Bucket(
+            name: "Bucket - 3",
+            description: "This is a third bucket, this bucket is for testing purpose only",
+            topics: [Topic.previewData[1], Topic.previewData[0]]
+        )
     ]
-    
+}
+
+extension Bucket {
     struct Owner {
         let id: UUID = UUID()
-        var name: String
-        var username: String
+        let name: String
+        let username: String
+        let email: String
         
-        init(name: String, username: String) {
+        init(name: String, username: String, email: String) {
             self.name = name
             self.username = username
+            self.email = email
         }
         
-        static let owners = [
-            Owner(name: "Safal Neupane", username: "safalnpane"),
-            Owner(name: "Sulav Neupane", username: "sulav"),
-            Owner(name: "Kushal Neupane", username: "kushal"),
+        static let previewData = [
+            Owner(name: "Safal Neupane", username: "safalnpane", email: "safal.npane@gmail.com"),
+            Owner(name: "Sulav Neupane", username: "sulavnpane", email: "sulav.npane@gmail.com"),
+            Owner(name: "Kushal Poudel", username: "kushal", email: "kushal.poudel@gmail.com")
         ]
     }
 }

@@ -26,7 +26,7 @@ struct TopicCard: View {
 
 struct TopicCard_Previews: PreviewProvider {
     static var previews: some View {
-        TopicCard(topic: Topic.sampleData[0])
+        TopicCard(topic: Topic.previewData[0])
             .previewLayout(.fixed(width: 200, height: 90))
     }
 }

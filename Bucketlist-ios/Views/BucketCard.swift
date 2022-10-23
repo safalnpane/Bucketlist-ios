@@ -22,7 +22,7 @@ struct BucketCard: View {
                 }
                 Spacer()
                 VStack {
-                    Text("\(bucket.topics.count)")
+                    Text("5")
                         .font(.largeTitle)
                     Label("\(bucket.owners.count + 1)", systemImage: "person")
                 }
@@ -34,7 +34,7 @@ struct BucketCard: View {
 
 struct BucketCard_Previews: PreviewProvider {
     static var previews: some View {
-        BucketCard(bucket: Bucket.sampleData[0])
+        BucketCard(bucket: Bucket.previewData[0])
             .previewLayout(.fixed(width: 400, height: 60))
     }
 }
