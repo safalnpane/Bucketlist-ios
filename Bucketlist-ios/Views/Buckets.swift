@@ -8,54 +8,32 @@
 import SwiftUI
 
 struct Buckets: View {
-    @State private var buckets: [Bucket] = Bucket.previewData
-    @State private var isCreatingNewBucket = false
-    @State private var newBucket = Bucket(name: "", description: "")
     
+    var buckets: [Bucket]
+        
     var body: some View {
         List {
-            ForEach($buckets) { $bucket in
-                NavigationLink(destination: BucketDetail(bucket: $bucket)) {
-                    BucketCard(bucket: bucket)
+            ForEach(buckets) { bucket in
+                NavigationLink(destination: BucketDetails(bucket: bucket)) {
+                    Text(bucket.name)
+                        .font(.headline)
+                        .frame(height: 90)
                 }
-            }
-        }
-        .toolbar {
-            Button(action: { isCreatingNewBucket = true }) {
-                Image(systemName: "plus")
-            }
-        }
-        .sheet(isPresented: $isCreatingNewBucket) {
-            NavigationView {
-                NewBucket(bucket: $newBucket)
-                    .navigationTitle("New Bucket")
-                    .navigationBarTitleDisplayMode(.inline)
-                    .toolbar {
-                        ToolbarItem(placement: .cancellationAction) {
-                            Button("Dismiss") {
-                                newBucket = Bucket(name: "", description: "")
-                                isCreatingNewBucket = false
-                            }
-                        }
-                        ToolbarItem(placement: .confirmationAction) {
-                            Button("Done")
-                            {
-                                buckets.append(newBucket)
-                                newBucket = Bucket(name: "", description: "")
-                                isCreatingNewBucket = false
-                            }
-                            .disabled((newBucket.name.isEmpty) || (newBucket.description.isEmpty))
-                        }
-                    }
             }
         }
     }
 }
 
 struct BucketList_Previews: PreviewProvider {
+    static let previewBuckets = [
+        Bucket(name: "Test Bucket 1", description: "This is a test bucket 1"),
+        Bucket(name: "Test Bucket 2", description: "This is a test bucket 2"),
+        Bucket(name: "Test Bucket 3", description: "This is a test bucket 3"),
+        Bucket(name: "Test Bucket 4", description: "This is a test bucket 4")
+    ]
     static var previews: some View {
         NavigationView {
-            Buckets()
+            Buckets(buckets: previewBuckets)
                 .navigationTitle("Buckets")
         }
     }
