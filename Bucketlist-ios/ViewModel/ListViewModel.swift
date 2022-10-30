@@ -10,11 +10,11 @@ import Foundation
 @MainActor
 class ListViewModel: ObservableObject {
     
-    @Published var phase = DataFetchPhase<[BucketList]>.empty
+    @Published var phase = DataFetchPhase<[Topic]>.empty
     
-    private let listAPI = ListAPI()
+    private let listAPI = TopicAPI()
     
-    init(lists: [BucketList]? = nil) {
+    init(lists: [Topic]? = nil) {
         if let lists = lists {
             self.phase = .success(lists)
         } else {

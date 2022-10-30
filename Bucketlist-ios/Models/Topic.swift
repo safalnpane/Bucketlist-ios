@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct BucketList: Identifiable, Codable {
+struct Topic: Identifiable, Codable {
     var id: String = ""
     var created_at: Date = Date()
     var bucket_name: String = ""

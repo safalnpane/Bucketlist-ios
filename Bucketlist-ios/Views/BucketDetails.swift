@@ -57,7 +57,7 @@ struct BucketDetails: View {
         }
     }
     
-    private var lists: [BucketList] {
+    private var lists: [Topic] {
         if case let .success(lists) = listViewModel.phase {
             return lists
         } else {
