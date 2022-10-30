@@ -19,8 +19,14 @@ struct BucketDetails: View {
                     Text("Owners:")
                         .fontWeight(.bold)
                     Spacer()
-                    Text("Safal, Sulav, Kushal, Sijan, Ram, Sam")
-                        .font(.caption)
+                    ForEach(bucket.owners) { owner in
+                        Text(owner.username)
+                            .font(.caption)
+                            .padding(5)
+                            .background(.gray)
+                            .foregroundColor(.white)
+                            .cornerRadius(5)
+                    }
                 }
             }
             Section(header: Text("Topics")) {
@@ -35,7 +41,7 @@ struct BucketDetails: View {
 struct BucketDetails_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            BucketDetails(bucket: Bucket(name: "Test bucket", description: "This is a test bucket description. This can be either long or very short description. I can still add more description texts."))
+            BucketDetails(bucket: Bucket.previewData[0])
         }
     }
 }
