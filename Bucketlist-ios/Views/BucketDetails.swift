@@ -9,6 +9,7 @@ import SwiftUI
 
 struct BucketDetails: View {
     let bucket: Bucket
+    @StateObject var listViewModel = ListViewModel()
     
     var body: some View {
         List {
@@ -30,11 +31,38 @@ struct BucketDetails: View {
                 }
             }
             Section(header: Text("Topics")) {
-                
+                switch listViewModel.phase {
+                case .empty: ProgressView()
+                case .success(let lists):
+                    if lists.isEmpty {
+                        Text("No topics on this bucket")
+                            .fontWeight(.bold)
+                    } else {
+                        ForEach(lists) { list in
+                            NavigationLink(destination: Text("Topic Detail")) {
+                                Text(list.name)
+                            }
+                        }
+                    }
+                case .failure(let error): Text(error.localizedDescription)
+                }
             }
         }
         .navigationTitle(bucket.name)
         .navigationBarTitleDisplayMode(.inline)
+        .onAppear {
+            Task.init {
+                await listViewModel.loadLists(bucketId: bucket.id)
+            }
+        }
+    }
+    
+    private var lists: [BucketList] {
+        if case let .success(lists) = listViewModel.phase {
+            return lists
+        } else {
+            return []
+        }
     }
 }
 

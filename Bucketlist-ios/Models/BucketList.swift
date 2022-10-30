@@ -8,10 +8,9 @@
 import Foundation
 
 struct BucketList: Identifiable, Codable {
-    let id: String
-    let createdAt: Date
-    let bucketName: String
-    
-    var name: String
-    var updatedAt: Date
+    var id: String = ""
+    var created_at: Date = Date()
+    var bucket_name: String = ""
+    var name: String = ""
+    var updated_at: Date = Date()
 }

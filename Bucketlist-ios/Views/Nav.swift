@@ -37,7 +37,7 @@ struct Nav: View {
     private var overlayView: some View {
         switch bucketViewModel.phase {
         case .empty: ProgressView()
-        case .success(let buckets) where buckets.isEmpty: Text("No Articles")
+        case .success(let buckets) where buckets.isEmpty: Text("No Buckets")
         case .failure(let error): Text(error.localizedDescription)
         default: EmptyView()
         }
