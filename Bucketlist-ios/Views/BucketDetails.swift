@@ -55,6 +55,13 @@ struct BucketDetails: View {
                 await topicViewModel.loadTopics(bucketId: bucket.id)
             }
         }
+        .toolbar {
+            ToolbarItem(placement: .confirmationAction) {
+                Button(action: {}) {
+                    Image(systemName: "plus")
+                }
+            }
+        }
     }
     
     private var lists: [Topic] {

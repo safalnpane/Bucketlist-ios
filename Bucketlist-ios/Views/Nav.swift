@@ -22,7 +22,11 @@ struct Nav: View {
                 Buckets(buckets: buckets)
                     .overlay(overlayView)
                     .navigationTitle("Buckets")
-                    .task(id: defaultSelection, loadBuckets)
+                    .onAppear {
+                        Task.init {
+                            await bucketViewModel.loadBuckets()
+                        }
+                    }
             }
             .tabItem { Label("Buckets", systemImage: "basket")}.tag(2)
             NavigationView {
@@ -41,11 +45,6 @@ struct Nav: View {
         case .failure(let error): Text(error.localizedDescription)
         default: EmptyView()
         }
-    }
-    
-    @Sendable
-    private func loadBuckets() async {
-        await bucketViewModel.loadBuckets()
     }
     
     private var buckets: [Bucket] {

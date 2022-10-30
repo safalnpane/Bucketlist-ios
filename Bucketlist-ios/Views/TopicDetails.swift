@@ -59,6 +59,13 @@ struct TopicDetails: View {
                 await itemViewModel.loadItems(topicId: topic.id)
             }
         }
+        .toolbar {
+            ToolbarItem(placement: .confirmationAction) {
+                Button(action: {}) {
+                    Image(systemName: "plus")
+                }
+            }
+        }
     }
     
     private var items: [Item] {

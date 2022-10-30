@@ -21,6 +21,13 @@ struct Buckets: View {
                 }
             }
         }
+        .toolbar {
+            ToolbarItem(placement: .confirmationAction) {
+                Button(action: {}) {
+                    Image(systemName: "plus")
+                }
+            }
+        }
     }
 }
 
