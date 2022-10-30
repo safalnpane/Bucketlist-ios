@@ -9,7 +9,7 @@ import SwiftUI
 
 struct BucketDetails: View {
     let bucket: Bucket
-    @StateObject var listViewModel = ListViewModel()
+    @StateObject var topicViewModel = TopicViewModel()
     
     var body: some View {
         List {
@@ -31,16 +31,16 @@ struct BucketDetails: View {
                 }
             }
             Section(header: Text("Topics")) {
-                switch listViewModel.phase {
+                switch topicViewModel.phase {
                 case .empty: ProgressView()
-                case .success(let lists):
-                    if lists.isEmpty {
+                case .success(let topics):
+                    if topics.isEmpty {
                         Text("No topics on this bucket")
                             .fontWeight(.bold)
                     } else {
-                        ForEach(lists) { list in
-                            NavigationLink(destination: Text("Topic Detail")) {
-                                Text(list.name)
+                        ForEach(topics) { topic in
+                            NavigationLink(destination: TopicDetails(topic: topic)) {
+                                Text(topic.name)
                             }
                         }
                     }
@@ -52,14 +52,14 @@ struct BucketDetails: View {
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {
             Task.init {
-                await listViewModel.loadLists(bucketId: bucket.id)
+                await topicViewModel.loadTopics(bucketId: bucket.id)
             }
         }
     }
     
     private var lists: [Topic] {
-        if case let .success(lists) = listViewModel.phase {
-            return lists
+        if case let .success(topics) = topicViewModel.phase {
+            return topics
         } else {
             return []
         }

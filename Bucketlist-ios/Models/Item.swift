@@ -9,9 +9,9 @@ import Foundation
 
 struct Item: Identifiable, Codable {
     let id: String
-    let listName: String
+    let list_name: String
     
     var value: String
-    var tag: String
-    var isCompleted: Bool
+    var tag: String?
+    var is_completed: Bool
 }

@@ -8,26 +8,26 @@
 import Foundation
 
 @MainActor
-class ListViewModel: ObservableObject {
+class TopicViewModel: ObservableObject {
     
     @Published var phase = DataFetchPhase<[Topic]>.empty
     
-    private let listAPI = TopicAPI()
+    private let topicAPI = TopicAPI()
     
-    init(lists: [Topic]? = nil) {
-        if let lists = lists {
-            self.phase = .success(lists)
+    init(topics: [Topic]? = nil) {
+        if let topics = topics {
+            self.phase = .success(topics)
         } else {
             self.phase = .empty
         }
     }
     
     
-    func loadLists(bucketId: String) async {
+    func loadTopics(bucketId: String) async {
         phase = .empty
         do {
-            let lists = try await listAPI.fetch(bucketId: bucketId)
-            phase = .success(lists)
+            let topics = try await topicAPI.fetch(bucketId: bucketId)
+            phase = .success(topics)
         } catch {
             phase = .failure(error)
         }
