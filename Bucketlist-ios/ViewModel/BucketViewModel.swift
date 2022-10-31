@@ -39,4 +39,14 @@ class BucketViewModel: ObservableObject {
             phase = .failure(error)
         }
     }
+    
+    func createBucket(using bucket: Bucket) async {
+        phase = .empty
+        do {
+            _ = try await bucketAPI.create(newBucket: bucket)
+            await self.loadBuckets()
+        } catch {
+            phase = .failure(error)
+        }
+    }
 }

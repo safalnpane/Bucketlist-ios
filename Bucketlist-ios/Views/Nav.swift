@@ -9,7 +9,6 @@ import SwiftUI
 
 struct Nav: View {
     @State private var defaultSelection = 2
-    @StateObject var bucketViewModel = BucketViewModel()
     
     var body: some View {
         TabView(selection: $defaultSelection) {
@@ -19,14 +18,8 @@ struct Nav: View {
             }
             .tabItem { Label("Notification", systemImage: "bell") }.tag(1)
             NavigationView {
-                Buckets(buckets: buckets)
-                    .overlay(overlayView)
+                Buckets()
                     .navigationTitle("Buckets")
-                    .onAppear {
-                        Task.init {
-                            await bucketViewModel.loadBuckets()
-                        }
-                    }
             }
             .tabItem { Label("Buckets", systemImage: "basket")}.tag(2)
             NavigationView {
@@ -34,24 +27,6 @@ struct Nav: View {
                     .navigationTitle("Your profile")
             }
             .tabItem { Label("User", systemImage: "person") }.tag(3)
-        }
-    }
-    
-    @ViewBuilder
-    private var overlayView: some View {
-        switch bucketViewModel.phase {
-        case .empty: ProgressView()
-        case .success(let buckets) where buckets.isEmpty: Text("No Buckets")
-        case .failure(let error): Text(error.localizedDescription)
-        default: EmptyView()
-        }
-    }
-    
-    private var buckets: [Bucket] {
-        if case let .success(buckets) = bucketViewModel.phase {
-            return buckets
-        } else {
-            return []
         }
     }
 }

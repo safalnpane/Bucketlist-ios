@@ -17,9 +17,20 @@ struct BucketDetails: View {
                 Text(bucket.description)
                     .frame(minHeight: 50)
                 HStack {
-                    Text("Owners:")
+                    Text("Created on:")
                         .fontWeight(.bold)
                     Spacer()
+                    Text(bucket.created_at, style: .date)
+                }
+                HStack {
+                    Text("Updated on:")
+                        .fontWeight(.bold)
+                    Spacer()
+                    Text(bucket.updated_at, style: .date)
+                }
+            }
+            Section(header: Text("Owners")) {
+                HStack {
                     ForEach(bucket.owners) { owner in
                         Text(owner.username)
                             .font(.caption)
