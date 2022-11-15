@@ -32,4 +32,14 @@ class TopicViewModel: ObservableObject {
             phase = .failure(error)
         }
     }
+    
+    func createTopic(using topic: String, bucketId: String) async {
+        phase = .empty
+        do {
+            _ = try await topicAPI.create(newTopic: topic, bucketId: bucketId)
+            await self.loadTopics(bucketId: bucketId)
+        } catch {
+            phase = .failure(error)
+        }
+    }
 }

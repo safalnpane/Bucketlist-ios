@@ -10,6 +10,8 @@ import SwiftUI
 struct BucketDetails: View {
     let bucket: Bucket
     @StateObject var topicViewModel = TopicViewModel()
+    @State private var isCreatingNewTopic = false
+    @State private var newTopicName = ""
     
     var body: some View {
         List {
@@ -68,11 +70,29 @@ struct BucketDetails: View {
         }
         .toolbar {
             ToolbarItem(placement: .confirmationAction) {
-                Button(action: {}) {
+                Button(action: {isCreatingNewTopic = true}) {
                     Image(systemName: "plus")
                 }
             }
         }
+        .alert("New Topic", isPresented: $isCreatingNewTopic, actions:  {
+            TextField("Topic Name", text: $newTopicName)
+            Button("Create", action: {
+                if !newTopicName.isEmpty {
+                    Task.init {
+                        await topicViewModel.createTopic(using: newTopicName, bucketId: bucket.id)
+                        isCreatingNewTopic = false
+                        newTopicName = ""
+                    }
+                }
+            })
+            Button("Cancel", role: .cancel, action: {
+                isCreatingNewTopic = false
+                newTopicName = ""
+            })
+        }, message: {
+            Text("Provide a name for your new bucket.")
+        })
     }
     
     private var lists: [Topic] {
