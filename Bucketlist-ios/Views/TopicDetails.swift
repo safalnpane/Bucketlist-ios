@@ -52,6 +52,18 @@ struct TopicDetails: View {
                                         .fontWeight(.bold)
                                 }
                             }
+                            .swipeActions(edge: .leading, content: {
+                                Button(item.is_completed ? "Undone" : "Done", action: {
+                                    // TODO: Make PUT request to update is_completed
+                                })
+                            })
+                            .tint(item.is_completed ? .orange : .green)
+                            .swipeActions(content: {
+                                Button("Delete", action: {
+                                    // TODO: Make DELETE request
+                                })
+                            })
+                            .tint(.red)
                         }
                     }
                 }
