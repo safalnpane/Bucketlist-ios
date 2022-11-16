@@ -32,4 +32,14 @@ class ItemViewModel: ObservableObject {
             phase = .failure(error)
         }
     }
+    
+    func createItem(from item: String, tag: String, topicId: String) async {
+        phase = .empty
+        do {
+            _ = try await itemAPI.create(newItem: item, tag: tag, topicId: topicId)
+            await loadItems(topicId: topicId)
+        } catch {
+            phase = .failure(error)
+        }
+    }
 }

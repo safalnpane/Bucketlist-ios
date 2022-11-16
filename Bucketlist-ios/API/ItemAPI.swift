@@ -18,4 +18,14 @@ struct ItemAPI {
         let itemList = try await baseAPI.fetch(from: finalUrlString)
         return itemList
     }
+    
+    func create(newItem: String, tag: String, topicId: String) async throws -> Item {
+        let dictItem: Dictionary<String, Any> = [
+            "value": newItem,
+            "tag": tag
+        ]
+        
+        let itemResponse = try await baseAPI.create(from: pathString + "/\(topicId)", newDictObject: dictItem)
+        return itemResponse
+    }
 }

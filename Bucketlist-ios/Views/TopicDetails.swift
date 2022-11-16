@@ -10,6 +10,11 @@ import SwiftUI
 struct TopicDetails: View {
     let topic: Topic
     @StateObject var itemViewModel = ItemViewModel()
+    @State private var isCreatingNewItem = false
+    @State private var isDisplayingInfo = false
+    @State private var alertInfo = ""
+    @State private var newItemValue = ""
+    @State private var newItemTag = ""
     
     var body: some View {
         List {
@@ -61,11 +66,54 @@ struct TopicDetails: View {
         }
         .toolbar {
             ToolbarItem(placement: .confirmationAction) {
-                Button(action: {}) {
+                Button(action: { isCreatingNewItem = true }) {
                     Image(systemName: "plus")
                 }
             }
         }
+        .alert("New Item", isPresented: $isCreatingNewItem, actions: {
+            TextField("Item value", text: $newItemValue)
+            TextField("Tag (Optional)", text: $newItemTag)
+            Button("Cancel", role: .cancel, action: {
+                isCreatingNewItem = false
+                newItemValue = ""
+                newItemTag = ""
+            })
+            Button("Create", action: {
+                if !newItemValue.isEmpty {
+                    if (newItemValue.count >= 50){
+                        isCreatingNewItem = false
+                        alertInfo = "Item value can not be longer than 50 characters."
+                        isDisplayingInfo = true
+                    }else if (newItemTag.count >= 20) {
+                        isCreatingNewItem = false
+                        alertInfo = "Item tag can not be longer than 20 characters."
+                        isDisplayingInfo = true
+                    } else {
+                        Task.init {
+                            await itemViewModel.createItem(from: newItemValue, tag: newItemTag,topicId: topic.id)
+                            newItemValue = ""
+                            newItemTag = ""
+                            isCreatingNewItem = false
+                        }
+                    }
+                } else {
+                    isCreatingNewItem = false
+                    alertInfo = "You must provide a value."
+                    isDisplayingInfo = true
+                }
+            })
+        }, message: {
+            Text("Provide a value for your item")
+        })
+        .alert("Oops!", isPresented: $isDisplayingInfo, actions: {
+            Button("Dismiss", role: .cancel, action: {
+                isCreatingNewItem = true
+                isDisplayingInfo = false
+            })
+        }, message: {
+            Text(alertInfo)
+        })
     }
     
     private var items: [Item] {
